@@ -2,6 +2,7 @@
 
 class PDFThumbsPackage extends Package {
 
+
     /*  CONFIG AREA */
 
     protected $pkgHandle = 'c5_pdfthumbs'; //Setting this value in "public function getPackageHandle(){}" has some issues in Concrete 5.6.1
