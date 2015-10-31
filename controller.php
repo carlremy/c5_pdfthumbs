@@ -21,7 +21,7 @@ class PdfThumbsPackage extends Package {
     
     if(!$this->checkRequirements()) {
 
-      throw new Exception(t('Installation cannot be completed. Some requirements were not met: %s'), implode("\n", $this->installation_errors));
+      throw new Exception(t('Installation cannot be completed. Some requirements were not met: %s', implode("\n", $this->installation_errors)));
     }
     
     $pkg = parent::install();
