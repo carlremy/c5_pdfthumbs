@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	
+	<table name="btPDFThumb">
+		<field name="bID" type="I"><KEY /><UNSIGNED /></field>
+		<field name="fID" type="I"><NOTNULL/></field>
+		<field name="thumbnailSize" type="I"><UNSIGNED /></field>
+		<field name="altThumbnailfID" type="I"><UNSIGNED /></field>
+	</table>
+
+</schema>

@@ -1,0 +1,39 @@
+.pdfthumb-container {
+
+}
+.pdfthumb-container p {
+	margin:0 !important;
+	padding:0;
+}
+
+.pdfthumb-caption {
+	font-size:.875em;
+}
+.pdfthumb-description {
+	font-style: italic;
+}
+
+.fancybox-download {
+	display:inline-block;
+	float:right;
+}
+
+.pdf-thumb-metadata { 
+	font-size:.8em;
+	color:#7a7a7a;
+}
+
+.pdf-thumb-metadata .size {
+	font-style: italic;
+	font-family: "helvetica-neue", arial,helvetica,sans-serif;
+}
+
+.pdf-thumb-download-link {
+	text-transform: uppercase;
+	font-family: "helvetica-neue", arial,helvetica,sans-serif;
+}
+
+.pdf-thumb-download-link::after {
+	content:'\025BC';
+	font-size:.95em;
+}
