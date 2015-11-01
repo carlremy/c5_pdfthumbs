@@ -26,4 +26,4 @@
 		<a class="pdf-thumb-download-link" href="<?php echo  $fv->getForceDownloadURL() ?>"><?php echo t("Download")?></a><span class="size">(<?php echo Loader::helper('number')->formatSize($fv->getSize())?>)</span> | <span class="type"><?php echo $fv->getType() ?></span>
 	</p>
 </div>
-<?php } //&#x25BC;?>
+<?php }
