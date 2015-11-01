@@ -7,7 +7,8 @@ class PDFThumbBlockController extends BlockController {
 	protected $btCacheBlockOutput = true;
 	protected $btCacheBlockOutputOnPost = true;
 	protected $btCacheBlockOutputForRegisteredUsers = true;
-	protected $btInterfaceHeight = 250;
+ 	protected $btHelpContent = 'Use this block to display a PDF file with a thumbnail image and optional Fancybox popup.';
+	protected $btInterfaceHeight = 300;
 	protected $btTable = 'btPDFThumb';
     protected $btWrapperClass = 'ccm-ui';
 	protected $btExportFileColumns = array('fID');
@@ -26,12 +27,6 @@ class PDFThumbBlockController extends BlockController {
 	public function getJavaScriptStrings() {
 		return array('file-required' => t('You must select a file.'));	
 	}
-
-	public function on_before_render(){
-		//$this->addHeaderItem( Loader::helper('html')->css('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css') );			
-	}
-
-
 
 	public function on_page_view(){
 		$this->addHeaderItem( Loader::helper('html')->css('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css') );
@@ -56,7 +51,6 @@ class PDFThumbBlockController extends BlockController {
 			$e->add(t('You must select a file.'));
 		}
 		
-
 		return $e;
 	}
 
