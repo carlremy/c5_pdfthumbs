@@ -5,7 +5,8 @@ var PDFThumbnail = function(fID){
 		fID : fID,
 		refresh : function(){
 			$.get(CCM_DISPATCHER_FILENAME + '/tools/packages/pdfthumbs/generate', {fID:this.fID}, function(r,s,x){
-				console.log(r,s,x);
+				//console.log(r,s,x);
+				$('#ccm-b-file-fm-selected .ccm-file-selected-thumbnail img').attr('src', r.src);	
 			});	
 		}
 	}

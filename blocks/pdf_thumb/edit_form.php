@@ -28,8 +28,11 @@ $fh= Loader::helper('form');
 		</div>
 	</div>
 	
-	<div class="clearfix">	
-		<a href="#" id="btn-refresh-thumbnail" class="btn btn-default">Refresh Thumbnail</a>
+	<div class="clearfix">
+		<?php echo $fh->label('','&nbsp;')?>
+		<div class="input">	
+			<a href="#" id="btn-refresh-thumbnail" class="btn btn-default">Refresh Thumbnail</a>
+		</div>
 	</div>
 <!--/div-->
 

@@ -18,14 +18,19 @@ class PdfThumbsPackage extends Package {
   }
 
   public function install() {
-    
-    if(!$this->checkRequirements()) {
-
+    $config = $this->checkRequirements();
+    if(!$config) {
       throw new Exception(t('Installation cannot be completed. Some requirements were not met: %s', implode("\n", $this->installation_errors)));
     }
     
     $pkg = parent::install();
     $this->addSinglePages($pkg);
+
+    foreach($config as $k=>$v){
+      $pkg->saveConfig($k, $v);
+    }
+
+    BlockType::installBlockTypeFromPackage('pdf_thumb', $pkg);
 
   }
 
@@ -40,32 +45,55 @@ class PdfThumbsPackage extends Package {
   }
 
   protected function checkRequirements() {
-
     //http://www.concrete5.org/documentation/how-tos/developers/check-prerequisites-before-installing-a-package/
+
     $warnings = array();
     $errors = array();
+    $config = array();
 
-    if(!function_exists('shell_exec')) {
+    //Must be able to run shell commands
+    if(!function_exists('exec')) {
       $errors[] = t('Function shell_exec is required but not available.');
     }
 
-    if(!$mupdf = shell_exec("which mudraw 2>&1")) {
-      $warnings[] = t('MuPDF was not found in your path.');
+    //See if mupdf is installed
+    @exec("which mudraw", $mu_path);
+    if($mu_path) {
+     $config['PDFT_MUPDFPATH'] = trim($mu_path);
+    } else {
+      $warnings[] = t('MuPDF was not found');
+      $config['PDFT_MUPDFPATH'] = false;
     }
 
-    if(!$gs = shell_exec("which gs 2>&1")) {
-      $warnings[] = t('Ghostscript was not found in your path.');
+    //See if ghostscript is installed
+    @exec("which gs", $gs_path);
+    if($gs_path) {
+      $config['PDFT_GSPATH'] = trim($gs_path[0]);
+
+      //if ghostscript, make sure IM is installed
+      @exec("which convert", $im_path);
+      if($im_path) {
+        $config['PDFT_IMPATH'] = trim($im_path[0]);
+      } else {
+        $warnings[] = t('ImageMagick was not found');
+        $config['PDFT_IMPATH'] = false; 
+      }
+
+    } else {
+      $warnings[] = t('Ghostscript was not found');
+      $config['PDFT_GSPATH'] = false;
+      $config['PDFT_IMPATH'] = false;
     }
 
-    if(!$convert = shell_exec("which convert 2>&1")) {
-      $warnings[] = t('Imagemagick was not found in your path.');
+    //See if PHP imagick ext is installed and that it supports PDF
+    if( (class_exists('imagick')) &&  (in_array('PDF', Imagick::queryFormats('PDF')) )) {
+      $config['PDFT_NATIVE_SUPPORT'] = true;
+    } else {
+      $warnings[] =  t("Imagick PHP extension was not found or doesn't support PDF.");
+      $config['PDFT_NATIVE_SUPPORT'] = false;
     }
 
-    if(!$imagick = class_exists("imagick")) {
-      $warnings[] = t('PHP Imagick class is not installed.');
-    }
-
-    if(count($warnings) > 0) {
+    if(count($warnings) > 4) {
       $this->installation_errors = $warnings;
       return false;
     } 
@@ -75,35 +103,30 @@ class PdfThumbsPackage extends Package {
       return false;
     }
 
-    return true;
+    return $config;
   }
 
   public function upgrade(){
-    $pkg = Package::getByHandle('pdfthumbs');
-    BlockType::installBlockTypeFromPackage('pdf_thumb', $pkg);
+
   }
 
   protected function addSinglePages($pkg) {
     Loader::model('single_page');
-    $pg = SinglePage::add('dashboard/system/pdf_thumbnails', $pkg);
+    $pg = SinglePage::add('dashboard/system/pdf_thumbs/settings', $pkg);
     if (is_object($pg)) {
       $pg->update(array('cName'=>t("PDF Thumbs Settings"), 'cDescription'=>''));
     }
 
-    $pg = SinglePage::add('dashboard/system/reports/pdf_thumbs', $pkg);
+    $pg = SinglePage::add('dashboard/system/pdf_thumbs/reports', $pkg);
     if (is_object($pg)) {
       $pg->update(array('cName'=>t("PDF Thumbs Requirements"), 'cDescription'=>''));
     }
   }
 
-  public function on_file_add($file){
-    //Log::addEntry(print_r(func_get_args(),1), 'FooTest-on_file_add');
-  }
-
   public function on_file_version_add($version){
-    Log::addEntry(print_r($version->getMimetype(),1), 'FooTest-on_file_version_add');
 
     if($version->getMimetype() != 'application/pdf') return;
+
     $fh = Loader::helper('file');
     $ih = Loader::helper('image');
 

@@ -10,7 +10,7 @@ class PDFThumbBlockController extends BlockController {
  	protected $btHelpContent = 'Use this block to display a PDF file with a thumbnail image and optional Fancybox popup.';
 	protected $btInterfaceHeight = 300;
 	protected $btTable = 'btPDFThumb';
-    protected $btWrapperClass = 'ccm-ui';
+ 	protected $btWrapperClass = 'ccm-ui';
 	protected $btExportFileColumns = array('fID');
 
 	/** 
@@ -29,12 +29,12 @@ class PDFThumbBlockController extends BlockController {
 	}
 
 	public function on_page_view(){
-		$this->addHeaderItem( Loader::helper('html')->css('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css') );
-		$this->addFooterItem( Loader::helper('html')->javascript('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.js') );	
+		//$this->addHeaderItem( Loader::helper('html')->css('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css') );
+		//$this->addFooterItem( Loader::helper('html')->javascript('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.js') );	
 	}
 
 	public function view(){
-		$this->addHeaderItem( Loader::helper('html')->css('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css') );	
+		//$this->addHeaderItem( Loader::helper('html')->css('https://cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css') );	
 		$f = File::getByID($this->fID);
 		$fv = $f->getRecentVersion();
 		$this->set('fv', $fv);

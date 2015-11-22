@@ -9,10 +9,9 @@
 ?>
 <div class="pdfthumb-container" id="pdf-thumb-block-<?php echo $bID?>">
 	<a href="<?php echo $fv->getThumbnailSRC(3)?>" 
-		rel="fancybox-pdf" 
+		rel="pdfthumb-lightbox" 
 		id="file-fid-<?php echo $f->fID?>-bid-<?php echo $bID?>" 
-		title="<?php echo h($fv->getTitle()) . ' ' . h($fv->getDescription())?>" 
-		data-title=""
+		title="<?php echo h($fv->getTitle()) ?>" 
 		data-fid="<?php echo $f->fID ?>"
 		data-cid="<?php echo $cID ?>"
 		class="pdfthumb-link"><?php echo $thumbnail ?></a>
