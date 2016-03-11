@@ -2,7 +2,8 @@
 
 class DashboardSystemPdfThumbsController extends DashboardBaseController {
 
-  public function view() {
-    $this->set('Foo', 'Bar');
+  public function on_start() {
+    
   }
+
 }

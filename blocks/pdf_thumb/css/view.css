@@ -18,19 +18,19 @@
 	float:right;
 }
 
-.pdf-thumb-metadata { 
+.pdf-thumb-metadata {
 	font-size:.8em;
 	color:#7a7a7a;
 }
 
 .pdf-thumb-metadata .size {
 	font-style: italic;
-	font-family: "helvetica-neue", arial,helvetica,sans-serif;
+	font-family: "Helvetica Neue",arial,helvetica,sans-serif;
 }
 
 .pdf-thumb-download-link {
 	text-transform: uppercase;
-	font-family: "helvetica-neue", arial,helvetica,sans-serif;
+	font-family: "Helvetica Neue",arial,helvetica,sans-serif;
 }
 
 .pdf-thumb-download-link::after {
@@ -41,4 +41,15 @@
 .mfp-title .fancybox-download {
     color:#fff;
     font-weight:bold;
+}
+
+.mfp-container {
+  font-family:"Helvetica Neue",Arial,sans-serif !important;
+  font-weight:normal !important;
+}
+
+.mfp-close {
+  font-family:'Helvetica Neue',Arial,sans-serif !important;
+  font-weight:100;
+  right:-28px !important;
 }

@@ -1,13 +1,15 @@
 <?php defined('C5_EXECUTE') or die(_("Access denied."));
 //header('Content-type:text/plain');
-header('Content-type:application/json;charset=utf-8');
+//header('Content-type:application/json;charset=utf-8');
 //this file may be deprecated
 
 $json = Loader::helper('json');
 $pkg = Package::getByHandle('pdfthumbs');
 
+Loader::helper('ajax')->sendResult( array('status'=>'OK', 'message'=>t('Hello, it is me.')) );
 
-echo $json->encode( array('status'=>'OK', 'message'=>t('Hello, it is me.')) );
+//Loader::helper('ajax')->sendError("No");
+
 /*
 
 @exec("which mudraw", $mu_path);

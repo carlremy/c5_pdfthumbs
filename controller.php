@@ -7,7 +7,7 @@ class PdfThumbsPackage extends Package {
 
   protected $pkgHandle = 'pdfthumbs'; //Setting this value in "public function getPackageHandle(){}" has some issues in Concrete 5.6.1
   protected $appVersionRequired = '5.6.1';
-  protected $pkgVersion = '0.3';
+  protected $pkgVersion = '0.4';
 
   public function getPackageName() {
     return t('PDF Thumbnail Creator');
@@ -39,9 +39,9 @@ class PdfThumbsPackage extends Package {
   }
 
   public function on_start() {
-    //Events::extend($event, $class, $method, $filename, $params = array(), $priority = 5);
-    //Events::extend('on_file_add', __CLASS__,'on_file_add',__FILE__);
-    Events::extend('on_file_version_add', __CLASS__,'on_file_version_add',__FILE__);
+    //add the file importer
+    $ft = FileTypeList::getInstance();  
+    $ft->define('pdf', t('PDF'), FileType::T_DOCUMENT, 'pdf',false,false,'pdfthumbs');
   }
 
   protected function checkRequirements() {
@@ -123,16 +123,4 @@ class PdfThumbsPackage extends Package {
     }
   }
 
-  public function on_file_version_add($version){
-
-    if($version->getMimetype() != 'application/pdf') return;
-
-    $fh = Loader::helper('file');
-    $ih = Loader::helper('image');
-
-    $pdf = Loader::helper('pdfthumb', 'pdfthumbs');
-
-    $pdf->generate($version);
-
-  }  
 }
